@@ -2,11 +2,18 @@
 
 set -e
 
-if ! [ -x "$(command -v ansible)" ]; then
-    curl https://bootstrap.pypa.io/get-pip.py | python3
+if ! [ -x "$(command -v curl)" ]; then
+    echo "installing curl"
+    apt install -q=3 curl
 fi
 
+if ! [ -x "$(command -v python3)" ]; then
+    echo "installing python3"
+    apt install -q=3 python3
+    echo "installing pip3"
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3
+fi
 
-ansible-playbook -i ~/.dotfiles/hosts ~/.dotfiles/dotfiles.yml --ask-become-passif command -v terminal-notifier 1>/dev/null 2>&1; then
-  terminal-notifier -title "dotfiles: Bootstrap complete" -message "Successfully set up dev environment."
+if ! [ -x "$(command -v ansible)" ]; then
+    pip3 install ansible
 fi
