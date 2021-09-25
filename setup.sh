@@ -10,6 +10,7 @@ fi
 if ! [ -x "$(command -v python3)" ]; then
     echo "installing python3"
     apt install -q=3 python3
+    apt install -q=3 python3-distutils
     echo "installing pip3"
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 fi
