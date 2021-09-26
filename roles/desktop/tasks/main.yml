@@ -1,0 +1,6 @@
+---
+
+- name: Install desktop enviroment 
+  include_tasks: "{{ item }}"
+  with_fileglob:
+      - "{{ role_path }}/tasks/*[!main]*.yml"

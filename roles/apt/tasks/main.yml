@@ -1,0 +1,14 @@
+---
+- name: Update apt and full-upgrade
+  apt:
+    upgrade: full
+    update-cache: yes
+  become: yes
+  when: package_upgrade
+
+- name: Install common apt packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  become: yes
+  loop: "{{ packages }}"

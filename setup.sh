@@ -17,4 +17,5 @@ fi
 
 if ! [ -x "$(command -v ansible)" ]; then
     pip3 install ansible
+    pip3 install jinja2
 fi

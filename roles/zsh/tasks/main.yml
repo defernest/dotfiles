@@ -1,0 +1,25 @@
+---
+- name: Install zsh
+  apt: name=zsh state=latest
+  become: yes
+  register: zsh_install
+
+- name: Backing up existing ~/.zshrc
+  shell: 
+    cmd: cp ~/.zshrc ~/.zshrc.bac
+    removes: ~/.zshrc
+    creates: ~/.zshrc.bac
+  register: zshrc_bac
+  when: zsh_install.failed == false
+
+- name: Rm old ~/.zshrc
+  file:
+    path: ~/.zshrc
+    state: absent
+  when: zsh_install.failed == false
+
+- name: Link .zshrc
+  file:
+    src: "{{role_path}}/files/.zshrc"
+    dest: ~/.zshrc
+    state: link

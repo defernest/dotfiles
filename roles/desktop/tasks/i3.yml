@@ -1,0 +1,29 @@
+---
+
+- name: Install i3wm
+  apt:
+    name: i3
+    state: latest
+    install_recommends: no
+  become: yes
+  register: i3_install
+
+- name: Backing up existing ~/.config/i3/config
+  shell:
+    cmd: cp ~/.config/i3/config ~/.config/i3/config.bac
+    removes: ~/.config/i3/config
+    creates: ~/.config/i3/config.bac
+  register: i3_config_bac
+  when: i3_install.failed == false
+
+- name: Rm old ~/.config/i3/config
+  file:
+    path: ~/.config/i3/config
+    state: absent
+  when: i3_install
+
+- name: Link ~/.config/i3/config
+  file:
+    src: "{{role_path}}/files/i3wm_config"
+    dest: ~/.config/i3/config
+    state: link

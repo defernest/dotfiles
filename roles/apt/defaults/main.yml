@@ -1,0 +1,14 @@
+---
+package_upgrade: yes
+
+packages:
+    - build-essential
+    - fzf
+    - htop
+    - jq
+    - make
+    - wget
+desktop-packages:
+    - i3
+    - fonts-firacode
+    - flameshot

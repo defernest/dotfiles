@@ -1,0 +1,7 @@
+---
+
+- name: Install suckless-tools
+  apt:
+    name: suckless-tools
+    state: latest
+  become: yes

@@ -1,0 +1,34 @@
+---
+- name: Setup local workstation
+  hosts: local
+  roles:
+      - role: zsh
+        tags:
+            - zsh
+      - role: apt
+        tags:
+            - apt
+      - role: pip
+        tags:
+            - pip
+      - role: desktop
+        tags:
+            - desktop
+  tags:
+      - local
+
+- name: Setup remote servers
+  hosts: servers
+  roles:
+      - role: zsh
+        tags:
+            - zsh
+      - role: apt
+        tags:
+            - apt
+      - role: pip
+        tags:
+            - pip
+  tags:
+      - never
+      - servers
