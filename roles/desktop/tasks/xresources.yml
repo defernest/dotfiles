@@ -1,0 +1,20 @@
+---
+
+- name: Bacup old Xresources
+  shell:
+    cmd: cp ~/.Xresources ~/.Xresources.bac
+    removes: ~/.Xresources
+    creates: ~/.Xresources.bac
+  register: xresources_bac
+
+- name: Rm old .Xresources
+  file: 
+    path: ~/.Xresources
+    state: absent
+  when: xresources_bac.failed == false
+
+- name: Link new .Xresources
+  file:
+    src: "{{ role_path }}/files/Xresources"
+    dest: ~/.Xresources
+    state: link
