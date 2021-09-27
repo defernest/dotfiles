@@ -22,6 +22,6 @@
   when: rust_exist is failed
 
 - name: Install rust
-  shell: "{{rustshtemp.path}} -y"
+  shell: "{{rustshtemp.path}} -y -q --profile default" 
   become: yes
   when: rust_exist is failed
