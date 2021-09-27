@@ -1,2 +1,27 @@
 ---
-# tasks file for rust
+
+- name: Checking rust installation
+  command: rustup -V
+  register: rust_exist
+  ignore_errors: yes
+
+- name: Create temporary file
+  ansible.builtin.tempfile:
+    state: file 
+    suffix: .sh
+  register: rustshtemp
+  when: rust_exist is failed
+
+- name: Download rust install script
+  get_url:
+    url: https://sh.rustup.rs
+    dest: "{{rustshtemp.path}}" 
+    force: yes
+    mode: ugo+x
+  register: rust_sh
+  when: rust_exist is failed
+
+- name: Install rust
+  shell: "{{rustshtemp.path}} -y"
+  become: yes
+  when: rust_exist is failed

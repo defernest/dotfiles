@@ -1,2 +1,31 @@
 ---
-# tasks file for alacritty
+
+- name: Check that alacritty is already installed
+  command: alacritty --version
+  register: alacritty_exist
+  ignore_errors: yes
+
+- name: Build alacritty from source
+  include_tasks: build.yml
+  when: alacritty_exist is failed
+  register: alacritty_installed
+
+- name: Bacup alacritty.yml
+  shell: 
+    cmd: cp ~/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml.bac 
+    removes: ~/.config/alacritty/alacritty.yml
+    creates: ~/.config/alacritty/alacritty.yml.bac
+  when: alacritty_installed is success
+  register: alacritty_bacup
+
+- name: Rm old alacritty.yml
+  file:
+    path: ~/.config/alacritty/alacritty.yml
+    state: absent
+  when: alacritty_bacup is success
+
+- name: Link alacritty.yml
+  file:
+    src: "{{role_path}}/files/alacritty.yml"
+    dest: ~/.config/alacritty/alacritty.yml
+    state: link

@@ -11,6 +11,12 @@
       - role: pip
         tags:
             - pip
+      - role: rust
+        tags:
+            - rust
+      - role: alacritty
+        tags:
+            - alacritty
       - role: desktop
         tags:
             - desktop
