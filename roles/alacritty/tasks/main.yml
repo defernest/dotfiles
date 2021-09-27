@@ -10,6 +10,11 @@
   when: alacritty_exist is failed
   register: alacritty_installed
 
+- name: Check or create config directory
+  file:
+    path: ~/.config/alacritty/
+    state: directory
+
 - name: Bacup alacritty.yml
   shell: 
     cmd: cp ~/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml.bac 
