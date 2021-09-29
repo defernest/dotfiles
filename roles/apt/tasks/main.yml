@@ -12,3 +12,6 @@
     update_cache: yes
   become: yes
   loop: "{{ packages }}"
+
+- name: Configure nvim
+  include_tasks: nvim.yml

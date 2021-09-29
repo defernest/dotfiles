@@ -1,0 +1,20 @@
+---
+
+- name: Bacup old ~/.config/nvim
+  command: 
+    cmd: cp -r ~/.config/nvim ~/.config/nvim.bac
+    creates: ~/.config/nvim.bac
+    removes: ~/.config/nvim
+  register: nvim_bacup_create
+
+- name: rm old ~/.config/nvim
+  file: 
+    path: ~/.config/nvim
+    state: absent
+  when: nvim_bacup_create is success
+
+- name: link nvim config
+  file:
+    src: "{{role_path}}/files/nvim"
+    dest: ~/.config/nvim
+    state: link

@@ -4,6 +4,23 @@
   become: yes
   register: zsh_install
 
+- name: Sets zsh as default shell for my user | command
+  become: yes
+  command: chsh -s /bin/zsh {{ lookup('env','USER') }}
+  when: zsh_install is success
+  register: zsh_for_user
+  failed_when: zsh_for_user.rc >= 1
+  changed_when: zsh_for_user.rc == 0
+
+- name: Checks for oh-my-zsh installation | stat
+  stat:
+    path: ~/.oh-my-zsh
+  register: oh_my_zsh_stat
+
+- name: Installs oh-my-zsh | raw
+  raw: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+  when: not oh_my_zsh_stat.stat.exists
+
 - name: Backing up existing ~/.zshrc
   shell: 
     cmd: cp ~/.zshrc ~/.zshrc.bac

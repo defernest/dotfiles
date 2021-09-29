@@ -1,2 +1,26 @@
 ---
-# tasks file for fonts
+
+- name: Create ~/.fonts directory
+  file:
+    path: "~/.fonts"
+    state: directory
+  register: create_fonts_dir
+
+- name: Install fira-code
+  apt:
+    name: fonts-firacode
+  become: yes
+
+- name: Download and install latest font awesome release
+  unarchive:
+    src: "{{ r }}"
+    dest: "~/.fonts" 
+    remote_src: yes
+    include: "*/otfs/*[oft]"
+    extra_opts: "-j"
+  vars:
+    r: "{{ lookup('url', 'https://api.github.com/repos/FortAwesome/Font-Awesome/releases/latest') |
+        from_json |
+        community.general.json_query('assets[*].browser_download_url') |
+        regex_search('(https.*desktop.zip)') }}"
+  when: create_fonts_dir is success

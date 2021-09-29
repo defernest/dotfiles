@@ -20,6 +20,9 @@
       - role: desktop
         tags:
             - desktop
+      - role: fonts
+        tags:
+            - fonts
   tags:
       - local
 

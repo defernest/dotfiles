@@ -8,7 +8,6 @@ packages:
     - jq
     - make
     - wget
-desktop-packages:
-    - i3
-    - fonts-firacode
-    - flameshot
+    - tree
+    - neovim
+    - psmisc

@@ -1,0 +1,39 @@
+---
+
+- name: Install polybar
+  apt:
+    name: polybar
+  become: yes
+  register: polybar_install
+
+- name: Create ~/.config/polybar folder
+  file:
+    path: ~/.config/polybar
+    state: directory
+
+- name: Backing up existing ~/.config/polybar/config
+  shell:
+    cmd: cp ~/.config/polybar/config ~/.config/polybar/config.bac
+    removes: ~/.config/polybar/config
+    creates: ~/.config/polybar/config.bac
+  register: polybar_config_bac
+  when: polybar_install is success
+
+- name: Rm old ~/.config/polybar/config
+  file:
+    path: ~/.config/polybar/config
+    state: absent
+  when: polybar_config_bac is success
+
+- name: Link ~/.config/polybar/config
+  file:
+    src: "{{role_path}}/files/polybar"
+    dest: ~/.config/polybar/config
+    state: link
+
+- name: Link polybar launcher
+  file:
+    src: "{{role_path}}/files/polybar_launcher.sh"
+    dest: ~/.config/polybar/polybar_launcher.sh
+    state: link
+    mode: ugo+x

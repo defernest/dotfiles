@@ -14,13 +14,13 @@
     removes: ~/.config/i3/config
     creates: ~/.config/i3/config.bac
   register: i3_config_bac
-  when: i3_install.failed == false
+  when: i3_install is success
 
 - name: Rm old ~/.config/i3/config
   file:
     path: ~/.config/i3/config
     state: absent
-  when: i3_install
+  when: i3_config_bac is success
 
 - name: Link ~/.config/i3/config
   file:
