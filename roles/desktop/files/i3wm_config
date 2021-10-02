@@ -120,10 +120,10 @@ focus_follows_mouse no
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 1 ""
-set $ws2 2 ""
-set $ws3 3 ""
-set $ws4 4 ""
+set $ws1 "1" 
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
@@ -223,7 +223,7 @@ for_window [window_role="task_dialog"] floating enable
 #=====
 # Exec
 #=====
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/polybar_launcher.sh
 exec --no-startup-id firefox
 exec --no-startup-id felegram-desktop
 
