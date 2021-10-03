@@ -118,6 +118,11 @@ focus_follows_mouse no
 # focus the child container
 #bindsym $mod+d focus child
 
+# =====================
+# Change keybord layout
+# =====================
+exec_always "setxkbmap -model pc104 -layout us,ru -variant ,, -option grp:alt_shift_toggle"
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1" 

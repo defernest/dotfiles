@@ -1,4 +1,5 @@
 ---
+# check rust (after install update PATH)
 - name: Setup local workstation
   hosts: local
   roles:

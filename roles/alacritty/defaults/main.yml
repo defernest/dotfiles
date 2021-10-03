@@ -8,5 +8,6 @@ dependencies:
     - libxcb-xfixes0-dev
     - libxkbcommon-dev
     - python3
+    - desktop-file-utils
 
 repository: "https://github.com/alacritty/alacritty.git"

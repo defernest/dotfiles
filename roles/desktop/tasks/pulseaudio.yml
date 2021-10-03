@@ -1,0 +1,6 @@
+---
+
+- name: Install pulseaudio
+  apt:
+    name: pulseaudio
+  become: yes

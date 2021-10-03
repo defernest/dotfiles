@@ -2,6 +2,7 @@
 package_upgrade: yes
 
 packages:
+    - zip
     - build-essential
     - fzf
     - htop

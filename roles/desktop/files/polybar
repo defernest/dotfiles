@@ -22,7 +22,7 @@ font-3 = "Font Awesome 5 Brands:size=10;2"
 
 modules-left = i3
 modules-center =
-modules-right = cpu memory date
+modules-right = pulseaudio cpu memory date
 
 [module/i3]
 type = internal/i3

@@ -25,3 +25,8 @@
   shell: "{{rustshtemp.path}} -y -q --profile default" 
   become: yes
   when: rust_exist is failed
+
+- name: Add cargo path
+  shell: "~/.cargo/env" 
+  become: yes
+  when: rust_exist is failed
