@@ -24,6 +24,9 @@
       - role: fonts
         tags:
             - fonts
+      - role: telegram
+        tags:
+            - telegram
   tags:
       - local
 

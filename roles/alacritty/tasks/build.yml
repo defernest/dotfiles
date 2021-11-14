@@ -20,7 +20,7 @@
     dest: "{{build_dir.path}}"
 
 - name: Build alacritty
-  command: cargo build --release
+  command: ~/.cargo/bin/cargo build --release
   args:
     chdir: "{{build_dir.path}}"
 

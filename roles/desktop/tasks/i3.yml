@@ -8,6 +8,12 @@
   become: yes
   register: i3_install
 
+- name: Install i3lock
+  apt:
+    name: i3lock
+    state: latest
+  become: yes
+
 - name: Backing up existing ~/.config/i3/config
   shell:
     cmd: cp ~/.config/i3/config ~/.config/i3/config.bac
@@ -22,8 +28,20 @@
     state: absent
   when: i3_config_bac is success
 
+
+- name: Create ~/.config/i3/
+  file:
+    path: ~/.config/i3
+    state: directory
+
 - name: Link ~/.config/i3/config
   file:
     src: "{{role_path}}/files/i3wm_config"
     dest: ~/.config/i3/config
+    state: link
+
+- name: Link lock screen script
+  file:
+    src: "{{role_path}}/files/lock.sh"
+    dest: ~/.config/i3/lock.sh
     state: link

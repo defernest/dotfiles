@@ -37,6 +37,27 @@
 
 - name: Link .zshrc
   file:
-    src: "{{role_path}}/files/.zshrc"
+    src: "{{role_path}}/files/zshrc"
     dest: ~/.zshrc
     state: link
+
+- name: Backing up existing ~/.zshenv
+  shell: 
+    cmd: cp ~/.zshenv ~/.zshenv.bac
+    removes: ~/.zshenv
+    creates: ~/.zshenv.bac
+  register: zshenv_bac
+  when: zsh_install.failed == false
+
+- name: Rm old ~/.zshenv
+  file:
+    path: ~/.zshenv
+    state: absent
+  when: zsh_install.failed == false
+
+- name: Link .zshenv
+  file:
+    src: "{{role_path}}/files/zshenv"
+    dest: ~/.zshenv
+    state: link
+

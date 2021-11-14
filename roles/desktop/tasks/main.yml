@@ -4,3 +4,18 @@
   include_tasks: "{{ item }}"
   with_fileglob:
       - "{{ role_path }}/tasks/*[!main]*.yml"
+
+- name: Install imagemagick
+  apt:
+    name: imagemagick
+  become: yes
+
+- name: Install scrot
+  apt:
+    name: scrot
+  become: yes
+
+- name: Install xss-lock
+  apt:
+    name: xss-lock
+  become: yes

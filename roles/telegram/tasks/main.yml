@@ -1,2 +1,18 @@
 ---
-# tasks file for telegram
+
+- name: Download and unpack Telegram binary
+  unarchive:
+    src: https://telegram.org/dl/desktop/linux
+    dest: /opt/
+    remote_src: yes
+    exclude: Updater
+    creates: /opt/Telegram
+    extra_opts: [--strip-components=1]
+  become: yes
+
+- name: Link Telegram binary to /usr/local/bin/telegram-desktop
+  file:
+    src: /opt/Telegram
+    dest: /usr/local/bin/telegram-desktop
+    state: link
+  become: yes

@@ -1,7 +1,7 @@
 [bar/default]
 wm-restack = i3
 fixed-center = true
-height = 22
+height = 23
 offset-x = 5%
 offset-y = 2%
 background = ${colors.background}
@@ -16,13 +16,13 @@ module-margin-right = 1
 dim-value = 1.0
 
 font-0 = "Terminus:size=11;3"
-font-1 = "Font Awesome 5 Free:style=Regular:size=10;2"
-font-2 = "Font Awesome 5 Free:style=Solid:size=10;2"
+font-2 = "Font Awesome 5 Free:style=Regular:size=10;2"
+font-1 = "Font Awesome 5 Free:style=Solid:size=10;2"
 font-3 = "Font Awesome 5 Brands:size=10;2"
 
 modules-left = i3
-modules-center =
-modules-right = pulseaudio cpu memory date
+modules-center = date
+modules-right = eth cpu memory filesystem pulseaudio xkeyboard
 
 [module/i3]
 type = internal/i3
@@ -41,23 +41,23 @@ label-mode-foreground = ${colors.foreground}
 label-mode-background = ${colors.background}
 
 label-focused = %icon%
-label-focused-padding = 1
+label-focused-padding = 3
 label-focused-foreground = ${colors.foreground}
 label-focused-background = ${colors.background}
 label-focused-overline = ${colors.foreground}
 
 label-unfocused = %icon%
-label-unfocused-padding = 1
+label-unfocused-padding = 2
 label-unfocused-foreground = ${colors.foreground}
 label-unfocused-background = ${colors.background}
 
 label-urgent = %icon%
-label-urgent-padding = 1
+label-urgent-padding = 2
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.background}
 
 label-visible = %icon%
-label-visible-padding = 1
+label-visible-padding = 2
 label-visible-foreground = ${colors.foreground}
 label-visible-background = ${colors.background}
 
@@ -71,35 +71,76 @@ ws-icon-3 = 4;
 
 [module/date]
 type = internal/date
-interval = 1.0
-date = %d-%m-%Y %H:%M
-date-alt = %A, %d %B %Y
+interval = 1
+date = %d.%m.%Y
+date-alt = %d.%m.%Y %a
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+label =  %date%  %time%
 
 [module/cpu]
 type = internal/cpu
 interval = 0.5
 format = <label>
-label = CPU %percentage%%
+label =  %percentage%%
 
 [module/memory]
 type = internal/memory
 interval = 0.5
 format = <label>
-label = RAM %gb_used%
+label =  %gb_used%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+;mount-1 = /home
+
+label-mounted =  %mountpoint% %percentage_used%%
+label-unmounted = %mountpoint%
+label-unmounted-foreground = ${colors.red}
+
+[module/eth]
+type = internal/network
+interface = enp5s0
+interval = 1
+
+format-connected-prefix-foreground = ${colors.green}
+label-connected = %{F#859900}%{F-} %downspeed:0:9% %{F#268bd2}%{F-} %upspeed:0:9% 
+label-connected-foreground = ${colors.foreground}
+
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.red}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.red}
 
 [module/pulseaudio]
 type = internal/pulseaudio
 format-volume = <ramp-volume> <label-volume> 
 label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
-label-muted = 
-label-muted-foreground = #e8793e
+label-volume-foreground = ${colors.foreground}
+label-muted = 
+label-muted-foreground = ${colors.red}
 
 ramp-volume-0 = 
 ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
-ramp-volume-4 = 
+ramp-volume-2 = 
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+format = <label-layout> <label-indicator>
+format-spacing = 0
+
+label-layout = %icon%
+label-layout-padding = 1
+label-layout-background = ${colors.cyan}
+label-layout-foreground = ${colors.background}
+layout-icon-0 = us;EN
+layout-icon-1 = ru;RU
 
 [global/wm]
 margin-bottom = 0
@@ -119,5 +160,8 @@ pseudo-transparency = false
 [colors]
 background = ${xrdb:color0:#222}
 foreground = ${xrdb:foreground:#222}
+red = ${xrdb:color1:#222}
+green = ${xrdb:color2:#222}
+cyan = ${xrdb:color6:#222}
 line = ${xrdb:color5:#222}
 
